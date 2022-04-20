@@ -20,11 +20,13 @@ from rest_framework import routers
 
 from medicos.api.viewsets import MedicosViewSet
 from agendas.api.viewsets import AgendasViewSet
+from consultas.api.viewsets import ConsultasViewSet
 
 
 router = routers.DefaultRouter()
 router.register(r'medicos', MedicosViewSet)
 router.register(r'agendas', AgendasViewSet)
+router.register(r'consultas', ConsultasViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
