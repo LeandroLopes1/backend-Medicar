@@ -24,6 +24,10 @@ class Consultas(models.Model):
         return self.medico.nome
 
     class Meta:
+        verbose_name = 'Consulta'
+        verbose_name_plural = 'Consultas'
         managed = True
         db_table = 'consultas'
         unique_together = (('dia', 'horario', 'medico'),)
+
+        

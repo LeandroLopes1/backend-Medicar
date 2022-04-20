@@ -1,28 +1,42 @@
-from datetime import datetime
+from tabnanny import verbose
+from django.core.exceptions import ValidationError
 from django.db import models
+
+from datetime import datetime
+
 from medicos.models import Medicos
-from datetime import datetime, time
+
 
 # Create your models here.
 
-class Agendas(models.Model):
-    dia =  models.DateField(default=datetime.now)
-    HORARIOS_CHOICES = (
-        (time(8,0,0), '8:00:00'),
-        (time(8,30,0), '8:30:00'),
-        (time(9,0,0), '9:00:00'),
-        (time(9,30,0), '9:30:00'),
-        (time(10,0,0), '10:00:00'),
-    )
-    horario = models.TimeField(choices=HORARIOS_CHOICES, default=time(8, 0))
- 
-    medico = models.ForeignKey(Medicos, on_delete=models.CASCADE, related_name='agendas', blank=False, null=False)
-
-    def __str__(self):
-        return self.medico.nome
+class RegistroHorarios(models.Model):
+    hora = models.TimeField(unique=True)
 
     class Meta:
-        managed = True
-        db_table = 'agendas'
-        unique_together = (('dia', 'horario', 'medico'),)
+        verbose_name = 'Registro de Horario'
+        verbose_name_plural = 'Registros de Horarios'
+
+    def __str__(self):
+        return self.hora.strftime('%H:%M')
+
+class Agendas(models.Model): 
+    medico = models.ForeignKey(Medicos, on_delete=models.CASCADE)
+    dia = models.DateField()
+    agendas = models.ManyToManyField(RegistroHorarios)
+    inserido_em = models.DateField(auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'Agenda'
+        verbose_name_plural = 'Agendas'
+        unique_together = ('medico', 'dia')
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self.dia < datetime.today().date():
+            raise ValidationError('A data deve ser maior que a data atual')
+        super().save(force_insert, force_update, using, update_fields)
+           
+    
+    def __str__(self):
+        return f'{self.medico}, no dia {self.dia.strftime("%d/%m/%Y")}'
 
