@@ -7,4 +7,3 @@ class ConsultasSerializer(serializers.ModelSerializer):
         model = Consultas
         fields = ('id', 'dia', 'horario', 'medico', 'agenda', 'data_agendamento')
         read_only_fields = ('data_agendamento',)
-        

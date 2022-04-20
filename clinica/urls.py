@@ -28,7 +28,9 @@ router.register(r'medicos', MedicosViewSet)
 router.register(r'agendas', AgendasViewSet)
 router.register(r'consultas', ConsultasViewSet)
 
+
 urlpatterns = [
     path('', include(router.urls)),
+  
     path('admin/', admin.site.urls),
 ]

@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'medicos',
     'agendas',
     'consultas',
+
 ]
 
 MIDDLEWARE = [
