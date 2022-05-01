@@ -1,11 +1,8 @@
-from tabnanny import verbose
 from django.core.exceptions import ValidationError
 from django.db import models
 
 from datetime import datetime
-
 from medicos.models import Medicos
-
 
 # Create your models here.
 
@@ -30,18 +27,10 @@ class Agendas(models.Model):
         verbose_name_plural = 'Agendas'
         unique_together = ('medico', 'dia')
 
-    def save(self, force_insert=False, force_update=False, using=None,
-             update_fields=None):
-        if self.dia < datetime.today().date():
-            raise ValidationError('A data deve ser maior que a data atual')
-        super().save(force_insert, force_update, using, update_fields)
-
     def clean(self):
         if self.dia < datetime.today().date():
             raise ValidationError('A data deve ser maior que a data atual')
         super().clean()
    
-    
     def __str__(self):
         return f'{self.medico}, no dia {self.dia.strftime("%d/%m/%Y")}'
-
