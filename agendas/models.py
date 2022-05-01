@@ -35,7 +35,12 @@ class Agendas(models.Model):
         if self.dia < datetime.today().date():
             raise ValidationError('A data deve ser maior que a data atual')
         super().save(force_insert, force_update, using, update_fields)
-           
+
+    def clean(self):
+        if self.dia < datetime.today().date():
+            raise ValidationError('A data deve ser maior que a data atual')
+        super().clean()
+   
     
     def __str__(self):
         return f'{self.medico}, no dia {self.dia.strftime("%d/%m/%Y")}'
