@@ -47,7 +47,7 @@ Passo 1: Criar o super usuário
 
 Passo 2: Digite no terminal o comando para subir o servidor:
 
-  - `python manage.py runserver`` 
+  - `python manage.py runserver`
   
 
 Passo 3: Entre no endereço http://localhost:8000/admin/ para fazer o login com o usuário criado.
