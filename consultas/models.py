@@ -8,7 +8,7 @@ from agendas.models import Agendas, RegistroHorarios
 
 class Consultas(models.Model):
     dia = models.DateField(default=datetime.now)
-
+    
     horario = models.ForeignKey(RegistroHorarios, on_delete=models.CASCADE)
     data_agendamento = models.DateTimeField(auto_now_add=True)
     medico = models.ForeignKey(Medicos, on_delete=models.CASCADE, related_name='consultas', blank=False, null=False)
@@ -16,6 +16,7 @@ class Consultas(models.Model):
 
     def __str__(self):
         return self.medico.nome
+
 
     class Meta:
         managed = True
