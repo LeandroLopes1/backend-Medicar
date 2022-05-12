@@ -10,6 +10,7 @@ from consultas.api.serializers import ConsultaDetalhesSerializer
 class ConsultasViewSet(viewsets.ModelViewSet):
     queryset = Consultas.objects.all()
     serializer_class = ConsultasSerializer
+    filterset_fields = ('crm', 'dia', 'horario')
 
     @action(detail=True, methods=['get'])
     def listar_consultas(self, request, pk=None):
